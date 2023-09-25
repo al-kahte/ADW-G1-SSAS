@@ -1,0 +1,1003 @@
+{
+  "name": "ADW-G1 SSAS",
+  "compatibilityLevel": 1600,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/localhost;AWDW-G1",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "localhost",
+            "database": "AWDW-G1"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "credential": {
+          "AuthenticationKind": "UsernamePassword",
+          "Username": "sa",
+          "EncryptConnection": false
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "Currency",
+        "columns": [
+          {
+            "name": "CurrencyKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CurrencyKey"
+          },
+          {
+            "name": "CurrencyCode",
+            "dataType": "string",
+            "sourceColumn": "CurrencyAlternateKey"
+          },
+          {
+            "name": "CurrencyName",
+            "dataType": "string",
+            "sourceColumn": "CurrencyName"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_DimCurrency = Source{[Schema=\"dbo\",Item=\"DimCurrency\"]}[Data]",
+                "in",
+                "    dbo_DimCurrency"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Calendar",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DateKey"
+          },
+          {
+            "name": "FullDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "FullDate"
+          },
+          {
+            "name": "DayNumberOfWeek",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DayNumberOfWeek"
+          },
+          {
+            "name": "Day",
+            "dataType": "string",
+            "sourceColumn": "DayNameOfWeek"
+          },
+          {
+            "name": "DayNumberOfMonth",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DayNumberOfMonth"
+          },
+          {
+            "name": "DayNumberOfYear",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DayNumberOfYear"
+          },
+          {
+            "name": "Week",
+            "dataType": "int64",
+            "sourceColumn": "WeekNumberOfYear"
+          },
+          {
+            "name": "Month",
+            "dataType": "string",
+            "sourceColumn": "MonthName"
+          },
+          {
+            "name": "MonthNumberOfYear",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "MonthNumberOfYear"
+          },
+          {
+            "name": "Quarter",
+            "dataType": "int64",
+            "sourceColumn": "CalendarQuarter"
+          },
+          {
+            "name": "Year",
+            "dataType": "int64",
+            "sourceColumn": "CalendarYear"
+          },
+          {
+            "name": "Semester",
+            "dataType": "int64",
+            "sourceColumn": "CalendarSemester"
+          },
+          {
+            "name": "FiscalQuarter",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FiscalQuarter"
+          },
+          {
+            "name": "FiscalYear",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FiscalYear"
+          },
+          {
+            "name": "FiscalSemester",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "FiscalSemester"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_DimDate = Source{[Schema=\"dbo\",Item=\"DimDate\"]}[Data]",
+                "in",
+                "    dbo_DimDate"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Employee",
+        "columns": [
+          {
+            "name": "EmployeeKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "EmployeeKey"
+          },
+          {
+            "name": "EmployeeNationalIDAlternateKey",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "EmployeeNationalIDAlternateKey"
+          },
+          {
+            "name": "FirstName",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "FirstName"
+          },
+          {
+            "name": "LastName",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "LastName"
+          },
+          {
+            "name": "MiddleName",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "MiddleName"
+          },
+          {
+            "name": "JobTitle",
+            "dataType": "string",
+            "sourceColumn": "JobTitle"
+          },
+          {
+            "name": "Gender",
+            "dataType": "string",
+            "sourceColumn": "Gender"
+          },
+          {
+            "name": "MaritalStatus",
+            "dataType": "string",
+            "sourceColumn": "MaritalStatus"
+          },
+          {
+            "name": "BirthDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "BirthDate"
+          },
+          {
+            "name": "HireDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "HireDate"
+          },
+          {
+            "name": "EmploymentType",
+            "dataType": "string",
+            "sourceColumn": "EmploymentType"
+          },
+          {
+            "name": "VacationHours",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "VacationHours"
+          },
+          {
+            "name": "SickLeaveHours",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SickLeaveHours"
+          },
+          {
+            "name": "BaseRate",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "BaseRate"
+          },
+          {
+            "name": "PayFrequency",
+            "dataType": "string",
+            "sourceColumn": "PayFrequency"
+          },
+          {
+            "name": "DepartmentName",
+            "dataType": "string",
+            "sourceColumn": "DepartmentName"
+          },
+          {
+            "name": "GroupName",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "GroupName"
+          },
+          {
+            "name": "StartDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "StartDate"
+          },
+          {
+            "name": "EndDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "EndDate"
+          },
+          {
+            "name": "SalesTerritoryKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SalesTerritoryKey"
+          },
+          {
+            "name": "Status",
+            "dataType": "string",
+            "sourceColumn": "Status"
+          },
+          {
+            "type": "calculated",
+            "name": "EmployeeName",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "CONCATENATE(CONCATENATE(Employee[FirstName], \" \"),CONCATENATE(CONCATENATE(Employee[MiddleName],\" \"), Employee[LastName]))"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_DimEmployee = Source{[Schema=\"dbo\",Item=\"DimEmployee\"]}[Data]",
+                "in",
+                "    dbo_DimEmployee"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Geography",
+        "columns": [
+          {
+            "name": "GeographyKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "GeographyKey"
+          },
+          {
+            "name": "GeographyAlternateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "GeographyAlternateKey"
+          },
+          {
+            "name": "City",
+            "dataType": "string",
+            "sourceColumn": "City"
+          },
+          {
+            "name": "StateProvinceCode",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "StateProvinceCode"
+          },
+          {
+            "name": "StateProvinceName",
+            "dataType": "string",
+            "sourceColumn": "StateProvinceName"
+          },
+          {
+            "name": "CountryRegionCode",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "CountryRegionCode"
+          },
+          {
+            "name": "CountryRegionName",
+            "dataType": "string",
+            "sourceColumn": "CountryRegionName"
+          },
+          {
+            "name": "SalesTerritoryKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SalesTerritoryKey"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_DimGeography = Source{[Schema=\"dbo\",Item=\"DimGeography\"]}[Data]",
+                "in",
+                "    dbo_DimGeography"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Product",
+        "columns": [
+          {
+            "name": "ProductKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ProductKey"
+          },
+          {
+            "name": "ProductAlternateKey",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "ProductAlternateKey"
+          },
+          {
+            "name": "ProductName",
+            "dataType": "string",
+            "sourceColumn": "ProductName"
+          },
+          {
+            "name": "Category",
+            "dataType": "string",
+            "sourceColumn": "ProductCategory"
+          },
+          {
+            "name": "Subcategory",
+            "dataType": "string",
+            "sourceColumn": "ProductSubcategory"
+          },
+          {
+            "name": "StandardCost",
+            "dataType": "decimal",
+            "isHidden": true,
+            "sourceColumn": "StandardCost"
+          },
+          {
+            "name": "FinishedGoodsFlag",
+            "dataType": "boolean",
+            "isHidden": true,
+            "sourceColumn": "FinishedGoodsFlag"
+          },
+          {
+            "name": "Color",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Color"
+          },
+          {
+            "name": "SafetyStockLevel",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SafetyStockLevel"
+          },
+          {
+            "name": "ReorderPoint",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ReorderPoint"
+          },
+          {
+            "name": "ListPrice",
+            "dataType": "decimal",
+            "isHidden": true,
+            "sourceColumn": "ListPrice"
+          },
+          {
+            "name": "DaysToManufacture",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DaysToManufacture"
+          },
+          {
+            "name": "ProductLine",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "ProductLine"
+          },
+          {
+            "name": "DealerPrice",
+            "dataType": "decimal",
+            "isHidden": true,
+            "sourceColumn": "DealerPrice"
+          },
+          {
+            "name": "Class",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Class"
+          },
+          {
+            "name": "Style",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "Style"
+          },
+          {
+            "name": "Model",
+            "dataType": "string",
+            "sourceColumn": "ModelName"
+          },
+          {
+            "name": "StartDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "StartDate"
+          },
+          {
+            "name": "EndDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "EndDate"
+          },
+          {
+            "name": "Status",
+            "dataType": "string",
+            "sourceColumn": "Status"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_DimProduct = Source{[Schema=\"dbo\",Item=\"DimProduct\"]}[Data]",
+                "in",
+                "    dbo_DimProduct"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Promotion",
+        "columns": [
+          {
+            "name": "PromotionKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "PromotionKey"
+          },
+          {
+            "name": "PromotionAlternateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "PromotionAlternateKey"
+          },
+          {
+            "name": "PromotionName",
+            "dataType": "string",
+            "sourceColumn": "PromotionName"
+          },
+          {
+            "name": "PromotionType",
+            "dataType": "string",
+            "sourceColumn": "PromotionType"
+          },
+          {
+            "name": "PromotionCategory",
+            "dataType": "string",
+            "sourceColumn": "PromotionCategory"
+          },
+          {
+            "name": "DiscountPct",
+            "dataType": "double",
+            "isHidden": true,
+            "sourceColumn": "DiscountPct"
+          },
+          {
+            "name": "MinQty",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "MinQty"
+          },
+          {
+            "name": "MaxQty",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "MaxQty"
+          },
+          {
+            "name": "StartDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "StartDate"
+          },
+          {
+            "name": "EndDate",
+            "dataType": "dateTime",
+            "isHidden": true,
+            "sourceColumn": "EndDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_DimPromotion = Source{[Schema=\"dbo\",Item=\"DimPromotion\"]}[Data]",
+                "in",
+                "    dbo_DimPromotion"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "SalesTerritory",
+        "columns": [
+          {
+            "name": "SalesTerritoryKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SalesTerritoryKey"
+          },
+          {
+            "name": "SalesTerritoryAlternateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SalesTerritoryAlternateKey"
+          },
+          {
+            "name": "SalesTerritoryRegion",
+            "dataType": "string",
+            "sourceColumn": "SalesTerritoryRegion"
+          },
+          {
+            "name": "SalesTerritoryCountry",
+            "dataType": "string",
+            "sourceColumn": "SalesTerritoryCountry"
+          },
+          {
+            "name": "SalesTerritoryGroup",
+            "dataType": "string",
+            "sourceColumn": "SalesTerritoryGroup"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_DimSalesTerritory = Source{[Schema=\"dbo\",Item=\"DimSalesTerritory\"]}[Data]",
+                "in",
+                "    dbo_DimSalesTerritory"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Store",
+        "columns": [
+          {
+            "name": "StoreKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StoreKey"
+          },
+          {
+            "name": "StoreAlternateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StoreAlternateKey"
+          },
+          {
+            "name": "StoreName",
+            "dataType": "string",
+            "sourceColumn": "StoreName"
+          },
+          {
+            "name": "BusinessType",
+            "dataType": "string",
+            "sourceColumn": "BusinessType"
+          },
+          {
+            "name": "Specialty",
+            "dataType": "string",
+            "sourceColumn": "Specialty"
+          },
+          {
+            "name": "NumberEmployees",
+            "dataType": "int64",
+            "sourceColumn": "NumberEmployees"
+          },
+          {
+            "name": "BankName",
+            "dataType": "string",
+            "sourceColumn": "BankName"
+          },
+          {
+            "name": "AnnualSales",
+            "dataType": "decimal",
+            "sourceColumn": "AnnualSales"
+          },
+          {
+            "name": "AnnualRevenue",
+            "dataType": "decimal",
+            "sourceColumn": "AnnualRevenue"
+          },
+          {
+            "name": "YearOpened",
+            "dataType": "int64",
+            "sourceColumn": "YearOpened"
+          },
+          {
+            "name": "GeographyKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "GeographyKey"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_DimStore = Source{[Schema=\"dbo\",Item=\"DimStore\"]}[Data]",
+                "in",
+                "    dbo_DimStore"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Orders",
+        "columns": [
+          {
+            "name": "SalesOrderID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SalesOrderID"
+          },
+          {
+            "name": "SalesOrderDetailID",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SalesOrderDetailID"
+          },
+          {
+            "name": "SalesOrderNumber",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "SalesOrderNumber"
+          },
+          {
+            "name": "AccountNumber",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "AccountNumber"
+          },
+          {
+            "name": "RevisionNumber",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "RevisionNumber"
+          },
+          {
+            "name": "Channel",
+            "dataType": "string",
+            "sourceColumn": "Channel"
+          },
+          {
+            "name": "OrderQuantity",
+            "dataType": "int64",
+            "sourceColumn": "OrderQuantity"
+          },
+          {
+            "name": "ProductStandardCost",
+            "dataType": "decimal",
+            "sourceColumn": "ProductStandardCost"
+          },
+          {
+            "name": "UnitPrice",
+            "dataType": "decimal",
+            "sourceColumn": "UnitPrice"
+          },
+          {
+            "name": "UnitPriceDiscountPct",
+            "dataType": "double",
+            "sourceColumn": "UnitPriceDiscountPct"
+          },
+          {
+            "name": "TaxRate",
+            "dataType": "double",
+            "sourceColumn": "TaxRate"
+          },
+          {
+            "name": "Freight",
+            "dataType": "decimal",
+            "sourceColumn": "Freight"
+          },
+          {
+            "name": "CarrierTrackingNumber",
+            "dataType": "string",
+            "isHidden": true,
+            "sourceColumn": "CarrierTrackingNumber"
+          },
+          {
+            "name": "ShipMethod",
+            "dataType": "string",
+            "sourceColumn": "ShipMethod"
+          },
+          {
+            "name": "ProductKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ProductKey"
+          },
+          {
+            "name": "StoreKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StoreKey"
+          },
+          {
+            "name": "EmployeeKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "EmployeeKey"
+          },
+          {
+            "name": "PromotionKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "PromotionKey"
+          },
+          {
+            "name": "CurrencyKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CurrencyKey"
+          },
+          {
+            "name": "SalesTerritoryKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SalesTerritoryKey"
+          },
+          {
+            "name": "OrderDateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "OrderDateKey"
+          },
+          {
+            "name": "DueDateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "DueDateKey"
+          },
+          {
+            "name": "ShipDateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ShipDateKey"
+          },
+          {
+            "name": "Status",
+            "dataType": "int64",
+            "sourceColumn": "Status"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_FactOrder = Source{[Schema=\"dbo\",Item=\"FactOrder\"]}[Data]",
+                "in",
+                "    dbo_FactOrder"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Metrics",
+        "columns": [
+          {
+            "name": "metricName",
+            "dataType": "string",
+            "sourceColumn": "metricName"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_Metrics = Source{[Schema=\"dbo\",Item=\"Metrics\"]}[Data]",
+                "in",
+                "    dbo_Metrics"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "49594984-ab95-45e4-af50-c173ee026fcc",
+        "fromTable": "Orders",
+        "fromColumn": "DueDateKey",
+        "toTable": "Calendar",
+        "toColumn": "DateKey",
+        "isActive": false
+      },
+      {
+        "name": "380e33cb-0bcf-4d1e-b84d-c190d98dee3a",
+        "fromTable": "Orders",
+        "fromColumn": "ShipDateKey",
+        "toTable": "Calendar",
+        "toColumn": "DateKey",
+        "isActive": false
+      },
+      {
+        "name": "0a6fd910-316f-4430-8bad-51edf5080a70",
+        "fromTable": "Orders",
+        "fromColumn": "SalesTerritoryKey",
+        "toTable": "SalesTerritory",
+        "toColumn": "SalesTerritoryKey",
+        "isActive": false
+      },
+      {
+        "name": "f20a3873-1e9a-4426-bace-1b1b934a7c9e",
+        "fromTable": "Orders",
+        "fromColumn": "StoreKey",
+        "toTable": "Store",
+        "toColumn": "StoreKey",
+        "isActive": false
+      },
+      {
+        "name": "9ec17c79-fc33-4e23-bc85-54f12f375dd4",
+        "fromTable": "Orders",
+        "fromColumn": "CurrencyKey",
+        "toTable": "Currency",
+        "toColumn": "CurrencyKey"
+      },
+      {
+        "name": "1fe5607b-fcd5-4512-96a7-2148c1ccbbdb",
+        "fromTable": "Orders",
+        "fromColumn": "OrderDateKey",
+        "toTable": "Calendar",
+        "toColumn": "DateKey"
+      },
+      {
+        "name": "984aae3c-9745-4a1a-810e-d696b0f7ea51",
+        "fromTable": "Employee",
+        "fromColumn": "SalesTerritoryKey",
+        "toTable": "SalesTerritory",
+        "toColumn": "SalesTerritoryKey"
+      },
+      {
+        "name": "c143b527-7625-43d6-9662-10c4f8d9528c",
+        "fromTable": "Orders",
+        "fromColumn": "EmployeeKey",
+        "toTable": "Employee",
+        "toColumn": "EmployeeKey"
+      },
+      {
+        "name": "f3626e12-c66c-47d8-96c0-90d06ac1f14d",
+        "fromTable": "Geography",
+        "fromColumn": "SalesTerritoryKey",
+        "toTable": "SalesTerritory",
+        "toColumn": "SalesTerritoryKey"
+      },
+      {
+        "name": "cb7e89fd-c9db-4b48-9692-8e12909cc6e5",
+        "fromTable": "Store",
+        "fromColumn": "GeographyKey",
+        "toTable": "Geography",
+        "toColumn": "GeographyKey"
+      },
+      {
+        "name": "ae4a6f94-9f10-43b6-bfbe-a430eda65203",
+        "fromTable": "Orders",
+        "fromColumn": "ProductKey",
+        "toTable": "Product",
+        "toColumn": "ProductKey"
+      },
+      {
+        "name": "2278fdd1-e217-418c-88df-ca0feca4cd07",
+        "fromTable": "Orders",
+        "fromColumn": "PromotionKey",
+        "toTable": "Promotion",
+        "toColumn": "PromotionKey"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "700"
+      }
+    ]
+  }
+}
