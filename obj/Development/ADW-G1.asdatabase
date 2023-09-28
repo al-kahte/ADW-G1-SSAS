@@ -109,7 +109,8 @@
           {
             "name": "Month",
             "dataType": "string",
-            "sourceColumn": "MonthName"
+            "sourceColumn": "MonthName",
+            "sortByColumn": "MonthNumberOfYear"
           },
           {
             "name": "MonthNumberOfYear",
@@ -877,7 +878,7 @@
           },
           {
             "type": "calculated",
-            "name": "TotalWithDsct",
+            "name": "TotalDiscountAmount",
             "dataType": "decimal",
             "isDataTypeInferred": true,
             "expression": "(Orders[GrossSales]-(Orders[GrossSales] * Orders[UnitPriceDiscountPct] ))",
@@ -891,10 +892,10 @@
           },
           {
             "type": "calculated",
-            "name": "TotalTax",
+            "name": "TotalTaxAmount",
             "dataType": "decimal",
             "isDataTypeInferred": true,
-            "expression": "Orders[TotalWithDsct]*Orders[TaxRate]",
+            "expression": "Orders[TotalDiscountAmount]*Orders[TaxRate]",
             "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
             "annotations": [
               {
@@ -908,7 +909,35 @@
             "name": "Net Sales",
             "dataType": "decimal",
             "isDataTypeInferred": true,
-            "expression": "Orders[TotalWithDsct] - Orders[TotalTax]",
+            "expression": "Orders[TotalDiscountAmount] - Orders[TotalTaxAmount]",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "TotalCostAmount",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "Orders[OrderQuantity] * Orders[ProductStandardCost]",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "TotalProfitAmount",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "Orders[Net Sales]-Orders[TotalCostAmount]",
             "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
             "annotations": [
               {
@@ -963,16 +992,58 @@
         ],
         "measures": [
           {
+            "name": "TotalOrders",
+            "expression": " COUNT(Orders[SalesOrderID])",
+            "formatString": "#,0"
+          },
+          {
             "name": "Total Quantity",
-            "expression": "SUM(Orders[OrderQuantity])"
+            "expression": "SUM(Orders[OrderQuantity])",
+            "formatString": "#,0"
           },
           {
-            "name": "GrossTotal",
-            "expression": " SUM(Orders[GrossSales])"
+            "name": "Gross Sales Total",
+            "expression": " SUM(Orders[GrossSales]) ",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
           },
           {
-            "name": "NetTotal",
-            "expression": " SUM(Orders[Net Sales])"
+            "name": "Net Sales Total",
+            "expression": " SUM(Orders[Net Sales])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Total Cost",
+            "expression": " SUMX(Orders, Orders[OrderQuantity]*RELATED('Product'[StandardCost]))",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
+          },
+          {
+            "name": "Total Profit",
+            "expression": " [Gross Sales Total] - [Total Cost]",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
           }
         ]
       }
@@ -992,14 +1063,6 @@
         "fromColumn": "ShipDateKey",
         "toTable": "Calendar",
         "toColumn": "DateKey",
-        "isActive": false
-      },
-      {
-        "name": "0a6fd910-316f-4430-8bad-51edf5080a70",
-        "fromTable": "Orders",
-        "fromColumn": "SalesTerritoryKey",
-        "toTable": "SalesTerritory",
-        "toColumn": "SalesTerritoryKey",
         "isActive": false
       },
       {
@@ -1065,6 +1128,15 @@
         "fromColumn": "PromotionKey",
         "toTable": "Promotion",
         "toColumn": "PromotionKey"
+      },
+      {
+        "name": "40b908e7-a0d9-4a8d-91ca-3f4efc5c6edf",
+        "fromTable": "Orders",
+        "fromColumn": "SalesTerritoryKey",
+        "toTable": "SalesTerritory",
+        "toColumn": "SalesTerritoryKey",
+        "isActive": false,
+        "crossFilteringBehavior": "bothDirections"
       }
     ],
     "annotations": [
