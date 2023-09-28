@@ -18,6 +18,8 @@
         },
         "credential": {
           "AuthenticationKind": "UsernamePassword",
+          "kind": "SQL",
+          "path": "localhost;AWDW-G1",
           "Username": "sa",
           "EncryptConnection": false
         }
@@ -858,6 +860,62 @@
             "name": "Status",
             "dataType": "int64",
             "sourceColumn": "Status"
+          },
+          {
+            "type": "calculated",
+            "name": "GrossSales",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "Orders[OrderQuantity]*Orders[UnitPrice]",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "TotalWithDsct",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "(Orders[GrossSales]-(Orders[GrossSales] * Orders[UnitPriceDiscountPct] ))",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "TotalTax",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "Orders[TotalWithDsct]*Orders[TaxRate]",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
+          },
+          {
+            "type": "calculated",
+            "name": "Net Sales",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "Orders[TotalWithDsct] - Orders[TotalTax]",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1033\" DisplayName=\"$ English (United States)\" Symbol=\"$\" PositivePattern=\"0\" NegativePattern=\"0\" /></Format>"
+              }
+            ]
           }
         ],
         "partitions": [
@@ -883,6 +941,7 @@
           {
             "name": "metricName",
             "dataType": "string",
+            "isHidden": true,
             "sourceColumn": "metricName"
           }
         ],
@@ -900,6 +959,20 @@
                 "    dbo_Metrics"
               ]
             }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Total Quantity",
+            "expression": "SUM(Orders[OrderQuantity])"
+          },
+          {
+            "name": "GrossTotal",
+            "expression": " SUM(Orders[GrossSales])"
+          },
+          {
+            "name": "NetTotal",
+            "expression": " SUM(Orders[Net Sales])"
           }
         ]
       }
