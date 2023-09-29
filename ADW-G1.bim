@@ -645,85 +645,6 @@
         ]
       },
       {
-        "name": "Store",
-        "columns": [
-          {
-            "name": "StoreKey",
-            "dataType": "int64",
-            "isHidden": true,
-            "sourceColumn": "StoreKey"
-          },
-          {
-            "name": "StoreAlternateKey",
-            "dataType": "int64",
-            "isHidden": true,
-            "sourceColumn": "StoreAlternateKey"
-          },
-          {
-            "name": "StoreName",
-            "dataType": "string",
-            "sourceColumn": "StoreName"
-          },
-          {
-            "name": "BusinessType",
-            "dataType": "string",
-            "sourceColumn": "BusinessType"
-          },
-          {
-            "name": "Specialty",
-            "dataType": "string",
-            "sourceColumn": "Specialty"
-          },
-          {
-            "name": "NumberEmployees",
-            "dataType": "int64",
-            "sourceColumn": "NumberEmployees"
-          },
-          {
-            "name": "BankName",
-            "dataType": "string",
-            "sourceColumn": "BankName"
-          },
-          {
-            "name": "AnnualSales",
-            "dataType": "decimal",
-            "sourceColumn": "AnnualSales"
-          },
-          {
-            "name": "AnnualRevenue",
-            "dataType": "decimal",
-            "sourceColumn": "AnnualRevenue"
-          },
-          {
-            "name": "YearOpened",
-            "dataType": "int64",
-            "sourceColumn": "YearOpened"
-          },
-          {
-            "name": "GeographyKey",
-            "dataType": "int64",
-            "isHidden": true,
-            "sourceColumn": "GeographyKey"
-          }
-        ],
-        "partitions": [
-          {
-            "name": "Partition",
-            "dataView": "full",
-            "source": {
-              "type": "m",
-              "expression": [
-                "let",
-                "    Source = #\"SQL/localhost;AWDW-G1\",",
-                "    dbo_DimStore = Source{[Schema=\"dbo\",Item=\"DimStore\"]}[Data]",
-                "in",
-                "    dbo_DimStore"
-              ]
-            }
-          }
-        ]
-      },
-      {
         "name": "Orders",
         "columns": [
           {
@@ -1046,6 +967,79 @@
             ]
           }
         ]
+      },
+      {
+        "name": "Store",
+        "columns": [
+          {
+            "name": "StoreKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StoreKey"
+          },
+          {
+            "name": "StoreAlternateKey",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "StoreAlternateKey"
+          },
+          {
+            "name": "StoreName",
+            "dataType": "string",
+            "sourceColumn": "StoreName"
+          },
+          {
+            "name": "BusinessType",
+            "dataType": "string",
+            "sourceColumn": "BusinessType"
+          },
+          {
+            "name": "Specialty",
+            "dataType": "string",
+            "sourceColumn": "Specialty"
+          },
+          {
+            "name": "NumberEmployees",
+            "dataType": "int64",
+            "sourceColumn": "NumberEmployees"
+          },
+          {
+            "name": "BankName",
+            "dataType": "string",
+            "sourceColumn": "BankName"
+          },
+          {
+            "name": "AnnualSales",
+            "dataType": "decimal",
+            "sourceColumn": "AnnualSales"
+          },
+          {
+            "name": "AnnualRevenue",
+            "dataType": "decimal",
+            "sourceColumn": "AnnualRevenue"
+          },
+          {
+            "name": "YearOpened",
+            "dataType": "int64",
+            "sourceColumn": "YearOpened"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/localhost;AWDW-G1\",",
+                "    dbo_DimStore = Source{[Schema=\"dbo\",Item=\"DimStore\"]}[Data]",
+                "in",
+                "    dbo_DimStore"
+              ]
+            }
+          }
+        ]
       }
     ],
     "relationships": [
@@ -1063,14 +1057,6 @@
         "fromColumn": "ShipDateKey",
         "toTable": "Calendar",
         "toColumn": "DateKey",
-        "isActive": false
-      },
-      {
-        "name": "f20a3873-1e9a-4426-bace-1b1b934a7c9e",
-        "fromTable": "Orders",
-        "fromColumn": "StoreKey",
-        "toTable": "Store",
-        "toColumn": "StoreKey",
         "isActive": false
       },
       {
@@ -1109,13 +1095,6 @@
         "toColumn": "SalesTerritoryKey"
       },
       {
-        "name": "cb7e89fd-c9db-4b48-9692-8e12909cc6e5",
-        "fromTable": "Store",
-        "fromColumn": "GeographyKey",
-        "toTable": "Geography",
-        "toColumn": "GeographyKey"
-      },
-      {
         "name": "ae4a6f94-9f10-43b6-bfbe-a430eda65203",
         "fromTable": "Orders",
         "fromColumn": "ProductKey",
@@ -1137,6 +1116,13 @@
         "toColumn": "SalesTerritoryKey",
         "isActive": false,
         "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "7519e40b-1650-498f-af32-eb28358bdeb3",
+        "fromTable": "Orders",
+        "fromColumn": "StoreKey",
+        "toTable": "Store",
+        "toColumn": "StoreKey"
       }
     ],
     "annotations": [
